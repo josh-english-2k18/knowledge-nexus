@@ -1,0 +1,5 @@
+{
+  "name": "KnowledgeNexus",
+  "description": "A sophisticated 3D knowledge graph visualizer that extracts entities and relationships from Markdown files using Gemini 2.5 Flash.",
+  "requestFramePermissions": []
+}

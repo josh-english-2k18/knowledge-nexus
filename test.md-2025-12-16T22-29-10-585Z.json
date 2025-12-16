@@ -1,0 +1,480 @@
+{
+  "nodes": [
+    {
+      "id": "knowledge_nexus",
+      "name": "KnowledgeNexus",
+      "type": "Project",
+      "description": "A sophisticated, AI-powered visualization tool that transforms static Markdown documents into immersive, interactive 3D knowledge graphs.",
+      "val": 10
+    },
+    {
+      "id": "markdown_documents",
+      "name": "Markdown Documents",
+      "type": "Concept",
+      "description": "Static text documents used as input for KnowledgeNexus's transformation process.",
+      "val": 7
+    },
+    {
+      "id": "knowledge_graphs",
+      "name": "Knowledge Graphs",
+      "type": "Concept",
+      "description": "Immersive, interactive 3D representations of entities and relationships, visualized by KnowledgeNexus.",
+      "val": 9
+    },
+    {
+      "id": "google",
+      "name": "Google",
+      "type": "Organization",
+      "description": "The technology company that developed the Gemini AI models and GenAI SDK.",
+      "val": 8
+    },
+    {
+      "id": "gemini_2_5_flash",
+      "name": "Gemini 2.5 Flash",
+      "type": "AI Model",
+      "description": "Google's AI model leveraged by KnowledgeNexus for real-time semantic analysis and entity extraction.",
+      "val": 10
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "type": "Technology",
+      "description": "The core JavaScript framework (version 19) used for building the KnowledgeNexus user interface.",
+      "val": 8
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "type": "Technology",
+      "description": "The typed superset of JavaScript used as a core programming language for KnowledgeNexus.",
+      "val": 7
+    },
+    {
+      "id": "react_force_graph_3d",
+      "name": "React Force Graph 3D",
+      "type": "Technology",
+      "description": "A library built on Three.js, enabling immersive 3D force-directed graph visualization in KnowledgeNexus.",
+      "val": 8
+    },
+    {
+      "id": "three_js",
+      "name": "Three.js",
+      "type": "Technology",
+      "description": "A JavaScript 3D library fundamental for WebGL rendering and interactive visualizations.",
+      "val": 7
+    },
+    {
+      "id": "google_genai_sdk",
+      "name": "Google GenAI SDK",
+      "type": "Technology",
+      "description": "The SDK (`@google/genai`) used by KnowledgeNexus to integrate with Google's AI services.",
+      "val": 7
+    },
+    {
+      "id": "tailwind_css",
+      "name": "Tailwind CSS",
+      "type": "Technology",
+      "description": "A utility-first CSS framework used for styling the modern user interface of KnowledgeNexus.",
+      "val": 6
+    },
+    {
+      "id": "lucide_react",
+      "name": "Lucide React",
+      "type": "Technology",
+      "description": "A library providing intuitive SVG icons for the KnowledgeNexus application.",
+      "val": 5
+    },
+    {
+      "id": "node_js",
+      "name": "Node.js",
+      "type": "Technology",
+      "description": "The JavaScript runtime environment (v18+) required for running KnowledgeNexus.",
+      "val": 7
+    },
+    {
+      "id": "google_gemini_api_key",
+      "name": "Google Gemini API Key",
+      "type": "Credential",
+      "description": "A valid API key required to access Google's Gemini AI services.",
+      "val": 8
+    },
+    {
+      "id": "google_ai_studio",
+      "name": "Google AI Studio",
+      "type": "Platform",
+      "description": "The online platform where developers can obtain a Google Gemini API Key.",
+      "val": 6
+    },
+    {
+      "id": "mit_license",
+      "name": "MIT License",
+      "type": "License",
+      "description": "The permissive open-source license under which KnowledgeNexus is distributed.",
+      "val": 6
+    },
+    {
+      "id": "intelligent_extraction",
+      "name": "Intelligent Extraction",
+      "type": "Feature",
+      "description": "KnowledgeNexus's capability to parse unstructured text into structured node-link data using AI.",
+      "val": 9
+    },
+    {
+      "id": "immersive_3d_visualization",
+      "name": "Immersive 3D Visualization",
+      "type": "Feature",
+      "description": "A key feature allowing deep exploration of complex data structures with zoom, pan, and rotation.",
+      "val": 9
+    },
+    {
+      "id": "semantic_categorization",
+      "name": "Semantic Categorization",
+      "type": "Feature",
+      "description": "Automatic classification of entities into types (People, Concepts, Technologies, Locations) with distinct visual signatures.",
+      "val": 8
+    },
+    {
+      "id": "reactive_performant_rendering",
+      "name": "Reactive & Performant Rendering",
+      "type": "Feature",
+      "description": "Ensures a smooth 60FPS rendering experience even during complex force simulations.",
+      "val": 7
+    },
+    {
+      "id": "glassmorphism_ui",
+      "name": "Glassmorphism UI",
+      "type": "Feature",
+      "description": "A modern, slate-themed interface featuring backdrop blurs, smooth animations, and intuitive interactions.",
+      "val": 7
+    },
+    {
+      "id": "extraction_pipeline",
+      "name": "Extraction Pipeline",
+      "type": "Architecture",
+      "description": "The step-by-step process KnowledgeNexus uses to extract and prepare data for visualization.",
+      "val": 8
+    },
+    {
+      "id": "prompt_engineering",
+      "name": "Prompt Engineering",
+      "type": "Concept",
+      "description": "The technique of constructing complex system prompts to define the AI's persona and task.",
+      "val": 7
+    },
+    {
+      "id": "schema_enforcement",
+      "name": "Schema Enforcement",
+      "type": "Concept",
+      "description": "The process of requiring the AI to adhere to a strict JSON structure for its output.",
+      "val": 8
+    },
+    {
+      "id": "json_schema",
+      "name": "JSON Schema",
+      "type": "Standard",
+      "description": "A standard for defining the structure and validating JSON data.",
+      "val": 7
+    },
+    {
+      "id": "normalization",
+      "name": "Normalization",
+      "type": "Process",
+      "description": "Frontend step of parsing AI-generated JSON, adjusting node sizes, and mapping types to colors.",
+      "val": 6
+    },
+    {
+      "id": "webgl_renderer",
+      "name": "WebGL Renderer",
+      "type": "Technology",
+      "description": "The underlying rendering component responsible for displaying the 3D knowledge graph.",
+      "val": 6
+    },
+    {
+      "id": "open_source_community",
+      "name": "Open-source Community",
+      "type": "Community",
+      "description": "A collaborative group where contributions are greatly appreciated for project development.",
+      "val": 6
+    },
+    {
+      "id": "contributions",
+      "name": "Contributions",
+      "type": "Process",
+      "description": "The act of adding features, fixing bugs, or improving documentation for the project.",
+      "val": 6
+    },
+    {
+      "id": "pull_request",
+      "name": "Pull Request",
+      "type": "Process",
+      "description": "A common mechanism in open-source for submitting proposed changes to a repository.",
+      "val": 5
+    },
+    {
+      "id": "knowledge_graph_architect",
+      "name": "Knowledge Graph Architect",
+      "type": "Persona",
+      "description": "The persona adopted by the AI (Gemini) when processing documents for KnowledgeNexus.",
+      "val": 7
+    },
+    {
+      "id": "upload_zone",
+      "name": "Upload Zone",
+      "type": "UI Element",
+      "description": "The initial cinematic area in KnowledgeNexus where users upload Markdown or text files.",
+      "val": 5
+    },
+    {
+      "id": "details_sidebar",
+      "name": "Details Sidebar",
+      "type": "UI Element",
+      "description": "A panel revealing entity descriptions and importance scores upon node interaction.",
+      "val": 5
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "type": "Platform",
+      "description": "The platform used to host the KnowledgeNexus repository, enabling cloning and contributions.",
+      "val": 7
+    },
+    {
+      "id": "ai_engine",
+      "name": "AI Engine",
+      "type": "Concept",
+      "description": "The core component within KnowledgeNexus responsible for AI processing and semantic analysis.",
+      "val": 7
+    },
+    {
+      "id": "data_structures",
+      "name": "Data Structures",
+      "type": "Concept",
+      "description": "Complex organizational formats for data, which KnowledgeNexus visualizes.",
+      "val": 6
+    },
+    {
+      "id": "entity_relationships",
+      "name": "Entity Relationships",
+      "type": "Concept",
+      "description": "The connections and links between extracted entities, forming the core of a knowledge graph.",
+      "val": 7
+    }
+  ],
+  "links": [
+    {
+      "relationship": "TRANSFORMS",
+      "source": "knowledge_nexus",
+      "target": "markdown_documents"
+    },
+    {
+      "relationship": "GENERATES",
+      "source": "knowledge_nexus",
+      "target": "knowledge_graphs"
+    },
+    {
+      "relationship": "LEVERAGES",
+      "source": "knowledge_nexus",
+      "target": "gemini_2_5_flash"
+    },
+    {
+      "relationship": "DEVELOPED_BY",
+      "source": "gemini_2_5_flash",
+      "target": "google"
+    },
+    {
+      "relationship": "USES_FRAMEWORK",
+      "source": "knowledge_nexus",
+      "target": "react"
+    },
+    {
+      "relationship": "USES_LANGUAGE",
+      "source": "knowledge_nexus",
+      "target": "typescript"
+    },
+    {
+      "relationship": "USES_LIBRARY",
+      "source": "knowledge_nexus",
+      "target": "react_force_graph_3d"
+    },
+    {
+      "relationship": "BUILT_ON",
+      "source": "react_force_graph_3d",
+      "target": "three_js"
+    },
+    {
+      "relationship": "USES_SDK",
+      "source": "knowledge_nexus",
+      "target": "google_genai_sdk"
+    },
+    {
+      "relationship": "STYLED_WITH",
+      "source": "knowledge_nexus",
+      "target": "tailwind_css"
+    },
+    {
+      "relationship": "USES_ICONS",
+      "source": "knowledge_nexus",
+      "target": "lucide_react"
+    },
+    {
+      "relationship": "REQUIRES",
+      "source": "knowledge_nexus",
+      "target": "node_js"
+    },
+    {
+      "relationship": "REQUIRES",
+      "source": "knowledge_nexus",
+      "target": "google_gemini_api_key"
+    },
+    {
+      "relationship": "OBTAINED_FROM",
+      "source": "google_gemini_api_key",
+      "target": "google_ai_studio"
+    },
+    {
+      "relationship": "DISTRIBUTED_UNDER",
+      "source": "knowledge_nexus",
+      "target": "mit_license"
+    },
+    {
+      "relationship": "HAS_FEATURE",
+      "source": "knowledge_nexus",
+      "target": "intelligent_extraction"
+    },
+    {
+      "relationship": "POWERED_BY",
+      "source": "intelligent_extraction",
+      "target": "gemini_2_5_flash"
+    },
+    {
+      "relationship": "ENFORCES",
+      "source": "intelligent_extraction",
+      "target": "json_schema"
+    },
+    {
+      "relationship": "HAS_FEATURE",
+      "source": "knowledge_nexus",
+      "target": "immersive_3d_visualization"
+    },
+    {
+      "relationship": "UTILIZES",
+      "source": "immersive_3d_visualization",
+      "target": "react_force_graph_3d"
+    },
+    {
+      "relationship": "HAS_FEATURE",
+      "source": "knowledge_nexus",
+      "target": "semantic_categorization"
+    },
+    {
+      "relationship": "HAS_FEATURE",
+      "source": "knowledge_nexus",
+      "target": "reactive_performant_rendering"
+    },
+    {
+      "relationship": "HAS_FEATURE",
+      "source": "knowledge_nexus",
+      "target": "glassmorphism_ui"
+    },
+    {
+      "relationship": "HAS_ARCHITECTURE",
+      "source": "knowledge_nexus",
+      "target": "extraction_pipeline"
+    },
+    {
+      "relationship": "INCLUDES",
+      "source": "extraction_pipeline",
+      "target": "prompt_engineering"
+    },
+    {
+      "relationship": "INCLUDES",
+      "source": "extraction_pipeline",
+      "target": "schema_enforcement"
+    },
+    {
+      "relationship": "INCLUDES",
+      "source": "extraction_pipeline",
+      "target": "normalization"
+    },
+    {
+      "relationship": "LEADS_TO",
+      "source": "extraction_pipeline",
+      "target": "webgl_renderer"
+    },
+    {
+      "relationship": "DEFINES_PERSONA",
+      "source": "prompt_engineering",
+      "target": "knowledge_graph_architect"
+    },
+    {
+      "relationship": "USES",
+      "source": "schema_enforcement",
+      "target": "json_schema"
+    },
+    {
+      "relationship": "PREPARES_DATA_FOR",
+      "source": "normalization",
+      "target": "webgl_renderer"
+    },
+    {
+      "relationship": "ENCOURAGES",
+      "source": "knowledge_nexus",
+      "target": "contributions"
+    },
+    {
+      "relationship": "MADE_VIA",
+      "source": "contributions",
+      "target": "pull_request"
+    },
+    {
+      "relationship": "BENEFITS",
+      "source": "contributions",
+      "target": "open_source_community"
+    },
+    {
+      "relationship": "HOSTED_ON",
+      "source": "knowledge_nexus",
+      "target": "github"
+    },
+    {
+      "relationship": "POWERS",
+      "source": "google_genai_sdk",
+      "target": "ai_engine"
+    },
+    {
+      "relationship": "USES",
+      "source": "knowledge_nexus",
+      "target": "ai_engine"
+    },
+    {
+      "relationship": "PRESENTS_UI_ELEMENT",
+      "source": "knowledge_nexus",
+      "target": "upload_zone"
+    },
+    {
+      "relationship": "PRESENTS_UI_ELEMENT",
+      "source": "knowledge_nexus",
+      "target": "details_sidebar"
+    },
+    {
+      "relationship": "REPRESENT",
+      "source": "knowledge_graphs",
+      "target": "data_structures"
+    },
+    {
+      "relationship": "VISUALIZE",
+      "source": "knowledge_graphs",
+      "target": "entity_relationships"
+    },
+    {
+      "relationship": "EXTRACTS",
+      "source": "intelligent_extraction",
+      "target": "entity_relationships"
+    },
+    {
+      "relationship": "CATEGORIZES_ENTITIES_FROM",
+      "source": "semantic_categorization",
+      "target": "markdown_documents"
+    }
+  ]
+}

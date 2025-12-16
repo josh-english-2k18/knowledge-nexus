@@ -1,0 +1,586 @@
+{
+  "nodes": [
+    {
+      "id": "jon_hanson",
+      "name": "Jon Hanson",
+      "type": "Person",
+      "description": "CEO/Founder of Skill Tree Marketing, whose brainchild is the company's bootstrapped success.",
+      "val": 9
+    },
+    {
+      "id": "skill_tree_marketing",
+      "name": "Skill Tree Marketing",
+      "type": "Organization",
+      "description": "A marketing agency co-founded by Jon Hanson, specializing in game marketing and utilizing AI-driven processes.",
+      "val": 10
+    },
+    {
+      "id": "nate_mordo",
+      "name": "Nate Mordo",
+      "type": "Person",
+      "description": "Marketing professional at Skill Tree Marketing, passionate about brand marketing and learning growth, with a focus on refining AI context engineering.",
+      "val": 7
+    },
+    {
+      "id": "nate_rudichuk",
+      "name": "Nate Rudichuk",
+      "type": "Person",
+      "description": "A professional with over 10 years in the video game industry on the product side, interested in tooling for creative and Go-To-Market strategies.",
+      "val": 7
+    },
+    {
+      "id": "marketing_process",
+      "name": "Marketing Process",
+      "type": "Concept",
+      "description": "Skill Tree Marketing's structured methodology, from client engagement to strategy development and campaign execution.",
+      "val": 8
+    },
+    {
+      "id": "client",
+      "name": "Client",
+      "type": "Concept",
+      "description": "The recipient of Skill Tree Marketing's services, providing game information and sales goals.",
+      "val": 6
+    },
+    {
+      "id": "game_information",
+      "name": "Game Information",
+      "type": "Data",
+      "description": "Detailed data about a client's game, essential for developing a tailored marketing strategy.",
+      "val": 6
+    },
+    {
+      "id": "game_sales_goals",
+      "name": "Game Sales Goals",
+      "type": "Concept",
+      "description": "Specific sales objectives for a game, provided by the client, which guide the marketing strategy.",
+      "val": 6
+    },
+    {
+      "id": "airtable",
+      "name": "AirTable",
+      "type": "Technology/Tool",
+      "description": "A flexible database platform used by Skill Tree Marketing to input and manage client context and information.",
+      "val": 6
+    },
+    {
+      "id": "automation",
+      "name": "Automation",
+      "type": "Concept",
+      "description": "The use of automated systems and processes, including agentic workflows and deep research loops, within the marketing process.",
+      "val": 7
+    },
+    {
+      "id": "agentic_workflows",
+      "name": "Agentic Workflows",
+      "type": "Concept",
+      "description": "Automated, intelligent processes that take initial context and build the basis for marketing strategies through deep research.",
+      "val": 8
+    },
+    {
+      "id": "deep_research",
+      "name": "Deep Research",
+      "type": "Concept",
+      "description": "An intensive research process, often part of agentic workflows, utilizing tools like Perplexity and ChatGPT.",
+      "val": 7
+    },
+    {
+      "id": "strategy_development",
+      "name": "Strategy Development",
+      "type": "Concept",
+      "description": "The phase of building and enriching marketing approaches based on gathered context and research.",
+      "val": 7
+    },
+    {
+      "id": "social_strategy",
+      "name": "Social Strategy",
+      "type": "Concept",
+      "description": "A specific marketing strategy focused on social media platforms, spun up after the core approach is built.",
+      "val": 6
+    },
+    {
+      "id": "john_cedar",
+      "name": "John Cedar",
+      "type": "Person",
+      "description": "A professional from Game Data Pros who collaborates with Skill Tree Marketing on structuring AI prompts.",
+      "val": 5
+    },
+    {
+      "id": "game_data_pros",
+      "name": "Game Data Pros",
+      "type": "Organization",
+      "description": "An organization collaborating with Skill Tree Marketing on aspects of AI prompt engineering, specifically with John Cedar.",
+      "val": 5
+    },
+    {
+      "id": "prompt_engineering",
+      "name": "Prompt Engineering",
+      "type": "Concept",
+      "description": "The process of structuring prompts for AI models, including considering counterfactual reasoning, to achieve desired strategic outputs.",
+      "val": 7
+    },
+    {
+      "id": "audience_segmentation",
+      "name": "Audience Segmentation",
+      "type": "Concept",
+      "description": "The process of predicting how different segments of a target audience will react to specific marketing messages.",
+      "val": 6
+    },
+    {
+      "id": "first_party_data",
+      "name": "First-Party Data",
+      "type": "Data",
+      "description": "Proprietary data, such as retention metrics, collected directly from clients, used to enrich marketing context.",
+      "val": 7
+    },
+    {
+      "id": "retention_metrics",
+      "name": "Retention Metrics",
+      "type": "Data",
+      "description": "Specific performance indicators related to user engagement and retention, part of first-party data.",
+      "val": 6
+    },
+    {
+      "id": "google_ai_studio",
+      "name": "Google AI Studio",
+      "type": "Technology/Tool",
+      "description": "A platform where Skill Tree Marketing's internal AI tools are developed and where their 'trained models' (prompt-chain contexts) reside.",
+      "val": 8
+    },
+    {
+      "id": "internal_ai_tools",
+      "name": "Internal AI Tools",
+      "type": "Concept",
+      "description": "Custom AI-powered tools created by Skill Tree Marketing for internal efficiency, explicitly not built as standalone products.",
+      "val": 7
+    },
+    {
+      "id": "ai_value_addition",
+      "name": "AI Value Addition",
+      "type": "Concept",
+      "description": "The strategic application of AI to enhance marketing processes, provide insights, and generate efficiency.",
+      "val": 7
+    },
+    {
+      "id": "sensor_tower",
+      "name": "Sensor Tower",
+      "type": "Organization/Tool",
+      "description": "An external data analytics platform from which Skill Tree Marketing explicitly states they do not mine data.",
+      "val": 4
+    },
+    {
+      "id": "apps_flyer",
+      "name": "Apps Flyer",
+      "type": "Organization/Tool",
+      "description": "An external mobile attribution and marketing analytics platform from which Skill Tree Marketing explicitly states they do not mine data.",
+      "val": 4
+    },
+    {
+      "id": "trained_model",
+      "name": "Trained Model",
+      "type": "Concept",
+      "description": "A 'Google AI Studio prompt-chain context' that encapsulates refined AI prompts and configurations, serving as a reusable base for campaigns.",
+      "val": 8
+    },
+    {
+      "id": "context_engineering",
+      "name": "Context Engineering",
+      "type": "Concept",
+      "description": "The problem of identifying and enabling editing of information components to continually feed and change the context within AI models.",
+      "val": 7
+    },
+    {
+      "id": "campaign_feedback_loop",
+      "name": "Campaign Feedback Loop",
+      "type": "Concept",
+      "description": "The process of feeding campaign results and data back into the AI model to correct and improve future marketing campaigns.",
+      "val": 7
+    },
+    {
+      "id": "perplexity_ai",
+      "name": "Perplexity AI",
+      "type": "Technology/Tool",
+      "description": "An AI-powered search and answer engine used by Skill Tree Marketing for deep research queries.",
+      "val": 6
+    },
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "type": "Technology/Tool",
+      "description": "A large language model used by Skill Tree Marketing for deep research, noted for having query caps.",
+      "val": 7
+    },
+    {
+      "id": "vector_database",
+      "name": "Vector Database",
+      "type": "Technology/Tool",
+      "description": "A type of database desired by Nate Rudichuk for efficiently storing and retrieving large volumes of data, especially for semantic search.",
+      "val": 6
+    },
+    {
+      "id": "creative_gtm_strategy",
+      "name": "Creative & GTM Strategy",
+      "type": "Concept",
+      "description": "The combination of creative development and Go-To-Market strategy, a primary interest for tooling from Nate Rudichuk's perspective.",
+      "val": 7
+    },
+    {
+      "id": "recurring_revenue_model",
+      "name": "Recurring Revenue Model",
+      "type": "Concept",
+      "description": "Skill Tree Marketing's business model, geared towards continuous revenue through ongoing client relationships.",
+      "val": 5
+    },
+    {
+      "id": "gpt_insights",
+      "name": "GPT Insights",
+      "type": "Concept",
+      "description": "Information and analysis derived from GPT models, which Nate Rudichuk notes can quickly become dated or 'yesterday's insights'.",
+      "val": 6
+    },
+    {
+      "id": "social_media_tool",
+      "name": "Social Media Tool",
+      "type": "Concept",
+      "description": "A desired AI-powered tool for social media and creative directors to offer strategy services based on data.",
+      "val": 7
+    },
+    {
+      "id": "synthetic_data",
+      "name": "Synthetic Data",
+      "type": "Data",
+      "description": "Artificially generated data that mimics real-world data, used as an alternative or supplement for strategy development.",
+      "val": 5
+    },
+    {
+      "id": "customer_profiles",
+      "name": "Customer Profiles",
+      "type": "Concept",
+      "description": "Detailed descriptions of target customers used to build profiles and agents for strategic planning.",
+      "val": 6
+    },
+    {
+      "id": "social_media_integration",
+      "name": "Social Media Integration",
+      "type": "Concept",
+      "description": "The process of connecting with and analyzing social media platforms, including scraping information on post performance and audience behavior.",
+      "val": 7
+    },
+    {
+      "id": "game_design_documents",
+      "name": "Game Design Documents",
+      "type": "Data",
+      "description": "Official documents detailing a game's design, used as an input for positioning the game in the market.",
+      "val": 6
+    },
+    {
+      "id": "google_docs",
+      "name": "Google Docs",
+      "type": "Technology/Tool",
+      "description": "A cloud-based word processor used by Nate Mordo for managing documents in a live workflow.",
+      "val": 5
+    },
+    {
+      "id": "spreadsheets",
+      "name": "Spreadsheets",
+      "type": "Technology/Tool",
+      "description": "Digital tables used by Nate Mordo for organizing data as part of a live workflow.",
+      "val": 5
+    },
+    {
+      "id": "gamma_ai",
+      "name": "Gamma AI",
+      "type": "Technology/Tool",
+      "description": "An AI-powered presentation tool (gamma.app) used to build marketing decks from generated content.",
+      "val": 6
+    },
+    {
+      "id": "client_intake",
+      "name": "Client Intake",
+      "type": "Concept",
+      "description": "The initial phase of gathering essential information from a client via forms to initiate a project.",
+      "val": 6
+    },
+    {
+      "id": "client_presentation",
+      "name": "Client Presentation",
+      "type": "Concept",
+      "description": "A pitch or strategy deck presented to clients, built upon research from earlier stages of the marketing process.",
+      "val": 7
+    },
+    {
+      "id": "research_acceptance_gap",
+      "name": "Research-Acceptance Gap",
+      "type": "Concept",
+      "description": "The discrepancy or challenge that arises when assumptions baked into initial research differ from client acceptance or real-world outcomes.",
+      "val": 6
+    }
+  ],
+  "links": [
+    {
+      "relationship": "IS_CEO_FOUNDER_OF",
+      "source": "jon_hanson",
+      "target": "skill_tree_marketing"
+    },
+    {
+      "relationship": "EMPLOYS",
+      "source": "skill_tree_marketing",
+      "target": "jon_hanson"
+    },
+    {
+      "relationship": "EMPLOYS",
+      "source": "skill_tree_marketing",
+      "target": "nate_mordo"
+    },
+    {
+      "relationship": "EMPLOYS",
+      "source": "skill_tree_marketing",
+      "target": "nate_rudichuk"
+    },
+    {
+      "relationship": "USES",
+      "source": "skill_tree_marketing",
+      "target": "marketing_process"
+    },
+    {
+      "relationship": "SERVES",
+      "source": "marketing_process",
+      "target": "client"
+    },
+    {
+      "relationship": "GATHERS",
+      "source": "marketing_process",
+      "target": "game_information"
+    },
+    {
+      "relationship": "ADDRESSES",
+      "source": "marketing_process",
+      "target": "game_sales_goals"
+    },
+    {
+      "relationship": "UTILIZES",
+      "source": "marketing_process",
+      "target": "airtable"
+    },
+    {
+      "relationship": "INCORPORATES",
+      "source": "marketing_process",
+      "target": "automation"
+    },
+    {
+      "relationship": "INCLUDES",
+      "source": "automation",
+      "target": "agentic_workflows"
+    },
+    {
+      "relationship": "INCLUDES",
+      "source": "automation",
+      "target": "deep_research"
+    },
+    {
+      "relationship": "BUILDS",
+      "source": "agentic_workflows",
+      "target": "strategy_development"
+    },
+    {
+      "relationship": "INCLUDES",
+      "source": "strategy_development",
+      "target": "social_strategy"
+    },
+    {
+      "relationship": "COLLABORATES_WITH",
+      "source": "marketing_process",
+      "target": "john_cedar"
+    },
+    {
+      "relationship": "WORKS_AT",
+      "source": "john_cedar",
+      "target": "game_data_pros"
+    },
+    {
+      "relationship": "APPLIES",
+      "source": "marketing_process",
+      "target": "prompt_engineering"
+    },
+    {
+      "relationship": "PREDICTS",
+      "source": "marketing_process",
+      "target": "audience_segmentation"
+    },
+    {
+      "relationship": "ENRICHES_CONTEXT_WITH",
+      "source": "marketing_process",
+      "target": "first_party_data"
+    },
+    {
+      "relationship": "INCLUDES",
+      "source": "first_party_data",
+      "target": "retention_metrics"
+    },
+    {
+      "relationship": "PROPPED_UP_IN",
+      "source": "internal_ai_tools",
+      "target": "google_ai_studio"
+    },
+    {
+      "relationship": "SEEKS",
+      "source": "skill_tree_marketing",
+      "target": "ai_value_addition"
+    },
+    {
+      "relationship": "DOES_NOT_MINE_FROM",
+      "source": "skill_tree_marketing",
+      "target": "sensor_tower"
+    },
+    {
+      "relationship": "DOES_NOT_MINE_FROM",
+      "source": "skill_tree_marketing",
+      "target": "apps_flyer"
+    },
+    {
+      "relationship": "RESULTS_IN",
+      "source": "marketing_process",
+      "target": "trained_model"
+    },
+    {
+      "relationship": "HOSTED_IN",
+      "source": "trained_model",
+      "target": "google_ai_studio"
+    },
+    {
+      "relationship": "FOCUSES_ON",
+      "source": "nate_mordo",
+      "target": "context_engineering"
+    },
+    {
+      "relationship": "EMPHASIZES",
+      "source": "nate_mordo",
+      "target": "campaign_feedback_loop"
+    },
+    {
+      "relationship": "USES",
+      "source": "deep_research",
+      "target": "perplexity_ai"
+    },
+    {
+      "relationship": "USES",
+      "source": "deep_research",
+      "target": "chatgpt"
+    },
+    {
+      "relationship": "DESIRES",
+      "source": "nate_rudichuk",
+      "target": "vector_database"
+    },
+    {
+      "relationship": "INTERESTED_IN_TOOLING_FOR",
+      "source": "nate_rudichuk",
+      "target": "creative_gtm_strategy"
+    },
+    {
+      "relationship": "OPERATES_ON",
+      "source": "skill_tree_marketing",
+      "target": "recurring_revenue_model"
+    },
+    {
+      "relationship": "VIEWS",
+      "source": "nate_rudichuk",
+      "target": "gpt_insights"
+    },
+    {
+      "relationship": "AS",
+      "source": "gpt_insights",
+      "target": "dated_information"
+    },
+    {
+      "relationship": "DESIRES",
+      "source": "nate_rudichuk",
+      "target": "social_media_tool"
+    },
+    {
+      "relationship": "BASED_ON",
+      "source": "social_media_tool",
+      "target": "first_party_data"
+    },
+    {
+      "relationship": "BASED_ON",
+      "source": "social_media_tool",
+      "target": "synthetic_data"
+    },
+    {
+      "relationship": "BUILDS",
+      "source": "social_media_tool",
+      "target": "customer_profiles"
+    },
+    {
+      "relationship": "PERFORMS",
+      "source": "social_media_tool",
+      "target": "social_media_integration"
+    },
+    {
+      "relationship": "INCLUDES",
+      "source": "social_media_integration",
+      "target": "social_media_scraping"
+    },
+    {
+      "relationship": "IDENTIFIES",
+      "source": "social_media_scraping",
+      "target": "target_audience"
+    },
+    {
+      "relationship": "TAKES_INPUT_FROM",
+      "source": "marketing_process",
+      "target": "game_design_documents"
+    },
+    {
+      "relationship": "PERFORMS",
+      "source": "nate_mordo",
+      "target": "live_workflow"
+    },
+    {
+      "relationship": "USES",
+      "source": "live_workflow",
+      "target": "google_docs"
+    },
+    {
+      "relationship": "USES",
+      "source": "live_workflow",
+      "target": "spreadsheets"
+    },
+    {
+      "relationship": "RUNS_THROUGH",
+      "source": "live_workflow",
+      "target": "google_ai_studio"
+    },
+    {
+      "relationship": "BUILDS_DECKS_WITH",
+      "source": "live_workflow",
+      "target": "gamma_ai"
+    },
+    {
+      "relationship": "HANDLES",
+      "source": "nate_rudichuk",
+      "target": "client_intake"
+    },
+    {
+      "relationship": "FEEDS_INTO",
+      "source": "client_intake",
+      "target": "agentic_workflows"
+    },
+    {
+      "relationship": "PRODUCES",
+      "source": "agentic_workflows",
+      "target": "client_presentation"
+    },
+    {
+      "relationship": "BASED_ON",
+      "source": "client_presentation",
+      "target": "deep_research"
+    },
+    {
+      "relationship": "EXHIBITS",
+      "source": "client_presentation",
+      "target": "research_acceptance_gap"
+    }
+  ]
+}
