@@ -175,8 +175,7 @@ const App: React.FC = () => {
     } catch (e) {
       console.error(e);
       triggerToast('error', 'Unable to extract graph from the provided file.');
-      setAppState(AppState.IDLE);
-      setTimeout(() => setAppState(AppState.IDLE), 4000);
+      setAppState(AppState.ERROR);
     }
   };
 
@@ -200,10 +199,17 @@ const App: React.FC = () => {
       after: null,
     });
 
+    let refiningTimeout: ReturnType<typeof setTimeout> | null = null;
+
     try {
       // Transition to refining state shortly after
-      setTimeout(() => {
-        setRefinementModal(prev => ({ ...prev, state: 'REFINING' }));
+      refiningTimeout = setTimeout(() => {
+        setRefinementModal(prev => {
+          if (prev.state === 'PREPARING') {
+            return { ...prev, state: 'REFINING' };
+          }
+          return prev;
+        });
       }, 800);
 
       const result = await GraphExpertSystem.unifyGraph(graphData);
@@ -217,7 +223,15 @@ const App: React.FC = () => {
 
       if (result.addedLinksCount > 0) {
         setGraphData(result.unifiedData);
+        // Issue 4: Node/link counters never update after refinement
+        setStats(prev => prev ? {
+          ...prev,
+          nodeCount: result.unifiedData.nodes.length,
+          linkCount: result.unifiedData.links.length,
+        } : null);
       }
+
+      if (refiningTimeout) clearTimeout(refiningTimeout);
 
       setRefinementModal(prev => ({
         ...prev,
@@ -226,6 +240,7 @@ const App: React.FC = () => {
       }));
 
     } catch (error) {
+      if (refiningTimeout) clearTimeout(refiningTimeout);
       console.error('Refinement failed', error);
       triggerToast('error', 'Failed to refine the graph.');
       setRefinementModal(prev => ({ ...prev, isOpen: false }));
@@ -335,13 +350,32 @@ const App: React.FC = () => {
 
       {/* Navigation Header */}
       <nav className="absolute top-0 left-0 right-0 z-30 p-6 flex justify-between items-center pointer-events-none">
-        <div className="flex items-center space-x-3 pointer-events-auto">
-          <div className="bg-gradient-to-br from-cyan-400 to-blue-600 p-2 rounded-lg shadow-[0_0_15px_rgba(34,211,238,0.4)]">
-            <Activity className="w-5 h-5 text-white" />
+        <div className="flex items-center space-x-3 pointer-events-auto group">
+          <div className="relative">
+            <div className="absolute inset-0 bg-cyan-500/20 blur-xl rounded-full group-hover:bg-cyan-500/40 transition-all duration-500" />
+            <div className="relative bg-slate-900/80 backdrop-blur-xl border border-white/10 p-2 rounded-xl shadow-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6">
+                <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="url(#logo-grad)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="12" cy="12" r="3" fill="url(#logo-grad)" />
+                <path d="M12 2V7M12 22V17M4 7L8.5 9.5M20 7L15.5 9.5M4 17L8.5 14.5M20 17L15.5 14.5" stroke="url(#logo-grad)" strokeWidth="1.5" strokeLinecap="round" />
+                <defs>
+                  <linearGradient id="logo-grad" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#22d3ee" />
+                    <stop offset="1" stopColor="#3b82f6" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
           </div>
-          <h1 className="text-xl font-bold tracking-tight text-white">
-            Knowledge<span className="text-cyan-400">Nexus</span>
-          </h1>
+          <div className="flex flex-col">
+            <h1 className="text-xl font-black tracking-tight flex items-center leading-none">
+              <span className="text-slate-100">Knowledge</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-500 ml-1 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">Nexus</span>
+            </h1>
+            <span className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-1 opacity-70 group-hover:opacity-100 group-hover:text-cyan-400 transition-all duration-300">
+              AI Graph Reasoning
+            </span>
+          </div>
         </div>
 
         <div className="flex items-center space-x-4 pointer-events-auto">

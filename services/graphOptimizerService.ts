@@ -108,24 +108,39 @@ export class GraphExpertSystem {
             `${getNodeId(l.source)}|${getNodeId(l.target)}|${l.relationship}`
         ));
 
+        const nodeIds = new Set(data.nodes.map(n => n.id));
         const finalLinks = [...data.links];
         let addedCount = 0;
 
         newLinks.forEach(link => {
-            const key = `${link.source}|${link.target}|${link.relationship}`;
+            const sourceId = getNodeId(link.source);
+            const targetId = getNodeId(link.target);
+
+            // Issue 6: AI-proposed links aren’t validated against existing nodes
+            if (!nodeIds.has(sourceId) || !nodeIds.has(targetId)) {
+                console.warn(`Gemini proposed an invalid link: ${sourceId} -> ${targetId}. Skipping.`);
+                return;
+            }
+
+            const key = `${sourceId}|${targetId}|${link.relationship}`;
             if (!existingLinkKeys.has(key)) {
                 finalLinks.push(link);
                 addedCount++;
             }
         });
 
+        const unifiedData = {
+            ...data,
+            links: finalLinks
+        };
+
+        // Issue 5: Cluster totals reported post-refinement are stale
+        const finalClusters = this.findDisconnectedComponents(unifiedData);
+
         return {
-            unifiedData: {
-                ...data,
-                links: finalLinks
-            },
+            unifiedData,
             addedLinksCount: addedCount,
-            clustersCount: clusters.length,
+            clustersCount: finalClusters.length,
             validation
         };
     }

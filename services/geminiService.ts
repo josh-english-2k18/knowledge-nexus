@@ -1,5 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { GraphData, GraphLink } from "../types";
+import { getNodeId } from "../utils/graph";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
@@ -103,7 +104,7 @@ export const chatWithGraph = async (message: string, graphData: GraphData): Prom
   ).join('\n');
 
   const linksContext = graphData.links.map(l =>
-    `${l.source}->${l.target}|${l.relationship}`
+    `${getNodeId(l.source)}->${getNodeId(l.target)}|${l.relationship}`
   ).join('\n');
 
   // We move the heavyweight context to the user message to avoid system instruction limits
