@@ -13,6 +13,8 @@ import {
   isGraphDataShape,
   getNodeId,
 } from './utils/graph';
+import { GraphExpertSystem } from './services/graphOptimizerService';
+import RefinementModal, { RefinementState } from './components/RefinementModal';
 
 type QueryResult =
   | { kind: 'node'; node: GraphNode }
@@ -40,6 +42,18 @@ const App: React.FC = () => {
     { role: 'model', text: 'Hello! I analyzed your knowledge graph. Ask me about the connections, themes, or hidden patterns I found.' }
   ]);
   const [toast, setToast] = useState<ToastState | null>(null);
+  const [isRefining, setIsRefining] = useState(false);
+  const [refinementModal, setRefinementModal] = useState<{
+    isOpen: boolean;
+    state: RefinementState;
+    before: { nodes: number; links: number; clusters: number } | null;
+    after: { nodes: number; links: number; clusters: number; addedLinks: number } | null;
+  }>({
+    isOpen: false,
+    state: 'PREPARING',
+    before: null,
+    after: null,
+  });
   const jsonInputRef = useRef<HTMLInputElement | null>(null);
   const toastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -161,8 +175,62 @@ const App: React.FC = () => {
     } catch (e) {
       console.error(e);
       triggerToast('error', 'Unable to extract graph from the provided file.');
-      setAppState(AppState.ERROR);
+      setAppState(AppState.IDLE);
       setTimeout(() => setAppState(AppState.IDLE), 4000);
+    }
+  };
+
+  const handleRefineGraph = async () => {
+    if (!hasGraph || isRefining) return;
+
+    setIsRefining(true);
+
+    // Initial stats before refinement
+    const initialClusters = GraphExpertSystem.findDisconnectedComponents(graphData);
+    const before = {
+      nodes: graphData.nodes.length,
+      links: graphData.links.length,
+      clusters: initialClusters.length,
+    };
+
+    setRefinementModal({
+      isOpen: true,
+      state: 'PREPARING',
+      before,
+      after: null,
+    });
+
+    try {
+      // Transition to refining state shortly after
+      setTimeout(() => {
+        setRefinementModal(prev => ({ ...prev, state: 'REFINING' }));
+      }, 800);
+
+      const result = await GraphExpertSystem.unifyGraph(graphData);
+
+      const after = {
+        nodes: result.unifiedData.nodes.length,
+        links: result.unifiedData.links.length,
+        clusters: result.clustersCount,
+        addedLinks: result.addedLinksCount,
+      };
+
+      if (result.addedLinksCount > 0) {
+        setGraphData(result.unifiedData);
+      }
+
+      setRefinementModal(prev => ({
+        ...prev,
+        state: 'COMPLETED',
+        after,
+      }));
+
+    } catch (error) {
+      console.error('Refinement failed', error);
+      triggerToast('error', 'Failed to refine the graph.');
+      setRefinementModal(prev => ({ ...prev, isOpen: false }));
+    } finally {
+      setIsRefining(false);
     }
   };
 
@@ -315,6 +383,17 @@ const App: React.FC = () => {
                 >
                   <Sparkles className="w-4 h-4" />
                   <span className="text-sm font-medium">AI Chat</span>
+                </button>
+                <button
+                  onClick={handleRefineGraph}
+                  disabled={isRefining}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all border ${isRefining
+                    ? 'bg-amber-500/20 text-amber-400 border-amber-500/40 animate-pulse'
+                    : 'bg-slate-900/80 hover:bg-slate-800 text-slate-200 border-white/10'
+                    } disabled:opacity-50`}
+                >
+                  <Activity className={`w-4 h-4 ${isRefining ? 'animate-spin' : ''}`} />
+                  <span className="text-sm font-medium">{isRefining ? 'Refining...' : 'Refine Graph'}</span>
                 </button>
                 <button
                   onClick={handleReset}
@@ -498,6 +577,14 @@ const App: React.FC = () => {
             onClose={() => setIsChatOpen(false)}
           />
         )}
+
+        <RefinementModal
+          isOpen={refinementModal.isOpen}
+          state={refinementModal.state}
+          beforeStats={refinementModal.before}
+          afterStats={refinementModal.after}
+          onClose={() => setRefinementModal(prev => ({ ...prev, isOpen: false }))}
+        />
 
       </main>
     </div>

@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-The app is a Vite React + TypeScript UI rooted at `index.tsx`, which mounts `App.tsx`. Shared widgets (UploadZone, Sidebar, Graph3D, AnalysisChat) live in `components/`, while API helpers stay under `services/` such as `services/geminiService.ts`. Update `types.ts` before touching UI state, and keep entry/config files (`index.html`, `vite.config.ts`, `tsconfig.json`, `metadata.json`) minimal. Add new modules next to their peers (e.g., `components/InsightsPanel.tsx`) and keep related assets in the same folder to preserve the flat layout.
+The app is a Vite React + TypeScript UI rooted at `index.tsx`, which mounts `App.tsx`. Shared widgets (UploadZone, Sidebar, Graph3D, AnalysisChat) live in `components/`, while API helpers stay under `services/` such as `services/geminiService.ts` and the `services/graphOptimizerService.ts`. Update `types.ts` before touching UI state, and keep entry/config files (`index.html`, `vite.config.ts`, `tsconfig.json`, `metadata.json`) minimal. Add new modules next to their peers (e.g., `components/InsightsPanel.tsx`) and keep related assets in the same folder to preserve the flat layout.
 
 ## Build, Test, and Development Commands
 - `npm install` — installs dependencies once per checkout.

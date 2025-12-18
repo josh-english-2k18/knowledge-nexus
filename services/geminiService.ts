@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from "@google/genai";
-import { GraphData } from "../types";
+import { GraphData, GraphLink } from "../types";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
@@ -142,5 +142,71 @@ export const chatWithGraph = async (message: string, graphData: GraphData): Prom
   } catch (error) {
     console.error("Gemini Chat Error:", error);
     throw new Error("Failed to communicate with the graph intelligence.");
+  }
+};
+
+export const findBridgesBetweenClusters = async (graphData: GraphData, clusters: string[][]): Promise<GraphLink[]> => {
+  const modelId = "gemini-3-flash-preview";
+
+  // Prepare a condensed version of the graph for context
+  const nodeMap = new Map(graphData.nodes.map(n => [n.id, n]));
+
+  // We'll describe the clusters to Gemini
+  const clusterDecriptions = clusters.map((ids, index) => {
+    const nodesInCluster = ids.map(id => {
+      const n = nodeMap.get(id);
+      return n ? `${n.id} (${n.name}: ${n.type})` : id;
+    }).join(', ');
+    return `Cluster ${index + 1}: [${nodesInCluster}]`;
+  }).join('\n\n');
+
+  const systemInstruction = `
+    You are an Expert Graph Architect. Your task is to analyze multiple "Clusters" of nodes from a knowledge graph and propose logical, semantic "Links" to connect them into a unified, professional-quality graph.
+    
+    Rules:
+    1. **Semantic Relevance**: Only propose links that make sense based on the entity names and types.
+    2. **Strategic Bridging**: Aim to connect smaller clusters or orphaned nodes to the main cluster(s).
+    3. **Relationship Quality**: Use descriptive relationship labels (e.g., "collaborates_with", "part_of", "influenced_by").
+    4. **Format**: Return a JSON array of links. Each link must have "source", "target", and "relationship".
+    5. **Source/Target**: Use the EXACT "id" strings provided in the clusters.
+    6. **Minimize Fluff**: Do not add redundant links. Only provide the most impactul connections to achieve graph unity.
+  `;
+
+  const prompt = `
+    Here are the clusters of nodes that are currently disconnected in my graph:
+    
+    ${clusterDecriptions}
+    
+    Please provide the bridging links as a JSON array.
+  `;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: modelId,
+      contents: prompt,
+      config: {
+        systemInstruction: systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.ARRAY,
+          items: {
+            type: Type.OBJECT,
+            properties: {
+              source: { type: Type.STRING },
+              target: { type: Type.STRING },
+              relationship: { type: Type.STRING }
+            },
+            required: ["source", "target", "relationship"]
+          }
+        }
+      }
+    });
+
+    if (!response.text) return [];
+    return JSON.parse(response.text);
+
+  } catch (error) {
+    console.error("Gemini Bridging Error:", error);
+    return []; // Return empty on error to fail gracefully
   }
 };

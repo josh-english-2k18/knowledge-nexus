@@ -22,6 +22,7 @@ KnowledgeNexus ingests Markdown or plain-text notes, asks Google’s **Gemini 3 
 - **Search & highlighting** – a bottom command palette filters both nodes and relationships (min two characters) and highlights matching links via `buildLinkKey`.
 - **JSON import/export** – load prior graphs through the hidden JSON picker or export normalized snapshots via `createGraphExportSnapshot`, complete with timestamped filenames.
 - **AI Graph Reasoning Chat** – A persistent, draggable chat window (`components/AnalysisChat.tsx`) that lets you converse with Gemini 3 Flash about the graph's structure, themes, and hidden patterns.
+- **Graph Expert System** – `services/graphOptimizerService.ts` provides structural validation and semantic bridging. It detects disconnected clusters and uses Gemini to intelligently weave them into a unified constellation.
 - **Operational feedback** – glassmorphic toasts, node/link counters, and duration measurements tell you when Gemini succeeds, when a graph is invalid, or when to retry.
 
 ## UI Tour
@@ -38,8 +39,9 @@ KnowledgeNexus ingests Markdown or plain-text notes, asks Google’s **Gemini 3 
 1. **Ingestion (`UploadZone`)** – validates the file type, reads text via `FileReader`, and passes it plus the filename to `App.tsx`.
 2. **Extraction (`extractGraphFromMarkdown`)** – sends the text to Gemini with system instructions describing a "Visionary Knowledge Graph Architect" persona, unlimited node count goals, "Reasoning: HIGH" configuration, and a strict `responseSchema`.
 3. **Normalization (`utils/graph.ts`)** – converts Gemini’s `importance` to `val`, strips invalid links, and keeps helper utilities (`buildLinkKey`, `createGraphExportSnapshot`, `isGraphDataShape`) centralized.
-4. **Visualization (`Graph3D`)** – computes `typeColorMap`, tunes d3 forces, builds `SpriteText` labels, and keeps highlight state in sync with search results.
-5. **Stateful UI (`App.tsx`)** – orchestrates `AppState`, toast notifications, stats, query filtering, node selection, and reset flows, then hands node metadata to `Sidebar`.
+4. **Graph Refinement (`GraphExpertSystem`)** – uses a Disjoint Set Union (DSU) algorithm to find isolated nodes and clusters, then invokes `findBridgesBetweenClusters` in `geminiService` to propose new semantic connections.
+5. **Visualization (`Graph3D`)** – computes `typeColorMap`, tunes d3 forces, builds `SpriteText` labels, and keeps highlight state in sync with search results.
+6. **Stateful UI (`App.tsx`)** – orchestrates `AppState`, toast notifications, stats, query filtering, node selection, and reset flows, then hands node metadata to `Sidebar`.
 
 ## Tech Stack
 
@@ -93,7 +95,8 @@ API_KEY=your_google_gemini_api_key
 4. Once **VISUALIZING**, rotate (left drag), pan (right drag), and zoom (scroll). Click nodes to focus them, open the sidebar, and expose their metadata.
 5. Use the bottom search palette to highlight nodes or relationships. Press “Clear” to reset and regain organic graph motion.
 6. Click **AI Chat** to open the reasoning assistant. Drag the header to move it, resize from the bottom-right, and ask questions about your data. The history persists while the session is open.
-7. Use **Load JSON** to rehydrate a saved graph, **Save JSON** to export the normalized structure, or **New Graph** to wipe the scene and upload another file.
+7. Click **Refine Graph** to run the Expert System. It validates the structure and connects orphaned nodes by asking Gemini for semantic bridges across clusters.
+8. Use **Load JSON** to rehydrate a saved graph, **Save JSON** to export the normalized structure, or **New Graph** to wipe the scene and upload another file.
 
 ## Graph JSON format
 
@@ -138,7 +141,9 @@ When importing JSON, `isGraphDataShape` validates that every node has `id`, `nam
 │   ├── Sidebar.tsx        # Node insights panel
 │   ├── AnalysisChat.tsx   # Floating AI reasoning interface
 │   └── UploadZone.tsx     # Drag-and-drop ingestion surface
-├── services/geminiService.ts # Gemini extraction helper
+├── services/
+│   ├── geminiService.ts   # Gemini extraction and bridging helper
+│   └── graphOptimizerService.ts # Expert system for validation & unification
 ├── utils/graph.ts         # Normalization, serialization, helper guards
 ├── types.ts               # Shared GraphData + AppState types
 ├── screenshot.png         # Latest UI capture (see top of README)
