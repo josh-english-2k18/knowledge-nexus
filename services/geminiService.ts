@@ -93,3 +93,54 @@ export const extractGraphFromMarkdown = async (markdownText: string): Promise<Gr
     throw new Error("Failed to extract graph data from the provided text.");
   }
 };
+
+export const chatWithGraph = async (message: string, graphData: GraphData): Promise<string> => {
+  const modelId = "gemini-3-flash-preview";
+
+  // Optimize graph context to be more token-efficient
+  const nodesContext = graphData.nodes.map(n =>
+    `${n.id}|${n.name}|${n.type}|${n.description?.slice(0, 100) || ''}`
+  ).join('\n');
+
+  const linksContext = graphData.links.map(l =>
+    `${l.source}->${l.target}|${l.relationship}`
+  ).join('\n');
+
+  // We move the heavyweight context to the user message to avoid system instruction limits
+  // and better manage token usage.
+  const contextPrompt = `
+    Context Data:
+    [Nodes format: id|name|type|description]
+    ${nodesContext}
+    
+    [Links format: source->target|relationship]
+    ${linksContext}
+    
+    User Query: ${message}
+  `;
+
+  const systemInstruction = `
+    You are an intelligent Graph Analyst. 
+    Use the provided "Context Data" (nodes and links) to answer the "User Query".
+    - Nodes are listed as: id|name|type|description
+    - Links are listed as: source->target|relationship
+    - Answer based ONLY on the provided graph context.
+    - Be concise and conversational.
+  `;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: modelId,
+      contents: contextPrompt,
+      config: {
+        systemInstruction: systemInstruction,
+        thinkingConfig: { includeThoughts: false, thinkingLevel: "HIGH" as any },
+      }
+    });
+
+    return response.text || "I was unable to generate a response.";
+  } catch (error) {
+    console.error("Gemini Chat Error:", error);
+    throw new Error("Failed to communicate with the graph intelligence.");
+  }
+};

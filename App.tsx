@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { Activity, Plus, Info, Download, UploadCloud, Search } from 'lucide-react';
+import { Activity, Plus, Info, Download, UploadCloud, Search, Sparkles } from 'lucide-react';
 import UploadZone from './components/UploadZone';
 import Graph3D from './components/Graph3D';
 import Sidebar from './components/Sidebar';
+import AnalysisChat, { Message } from './components/AnalysisChat';
 import { extractGraphFromMarkdown } from './services/geminiService';
 import { GraphData, GraphNode, GraphLink, AppState, ExtractionStats } from './types';
 import {
@@ -34,6 +35,10 @@ const App: React.FC = () => {
   const [queryResults, setQueryResults] = useState<QueryResult[]>([]);
   const [highlightedNodeIds, setHighlightedNodeIds] = useState<Set<string>>(() => new Set());
   const [highlightedLinkKeys, setHighlightedLinkKeys] = useState<Set<string>>(() => new Set());
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState<Message[]>([
+    { role: 'model', text: 'Hello! I analyzed your knowledge graph. Ask me about the connections, themes, or hidden patterns I found.' }
+  ]);
   const [toast, setToast] = useState<ToastState | null>(null);
   const jsonInputRef = useRef<HTMLInputElement | null>(null);
   const toastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -157,7 +162,6 @@ const App: React.FC = () => {
       console.error(e);
       triggerToast('error', 'Unable to extract graph from the provided file.');
       setAppState(AppState.ERROR);
-      // Reset to idle after a short delay so user can try again
       setTimeout(() => setAppState(AppState.IDLE), 4000);
     }
   };
@@ -169,6 +173,9 @@ const App: React.FC = () => {
     setStats(null);
     setCurrentFileName('');
     resetQueryState();
+    setChatMessages([
+      { role: 'model', text: 'Hello! I analyzed your knowledge graph. Ask me about the connections, themes, or hidden patterns I found.' }
+    ]);
   };
 
   const handleExportGraph = () => {
@@ -249,13 +256,13 @@ const App: React.FC = () => {
 
   return (
     <div className="relative w-full h-screen bg-slate-950 overflow-hidden text-slate-100">
-      
+
       {/* Background Ambience */}
       {appState === AppState.IDLE && (
-         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-             <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] bg-purple-500/10 rounded-full blur-[120px]" />
-             <div className="absolute top-[20%] right-[10%] w-[40%] h-[40%] bg-cyan-500/10 rounded-full blur-[100px]" />
-         </div>
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] bg-purple-500/10 rounded-full blur-[120px]" />
+          <div className="absolute top-[20%] right-[10%] w-[40%] h-[40%] bg-cyan-500/10 rounded-full blur-[100px]" />
+        </div>
       )}
 
       {/* Navigation Header */}
@@ -298,13 +305,25 @@ const App: React.FC = () => {
               <span className="text-sm font-medium">Save JSON</span>
             </button>
             {appState === AppState.VISUALIZING && (
-              <button
-                onClick={handleReset}
-                className="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg transition-all border border-slate-700 hover:border-slate-500"
-              >
-                <Plus className="w-4 h-4 rotate-45" />
-                <span className="text-sm font-medium">New Graph</span>
-              </button>
+              <>
+                <button
+                  onClick={() => setIsChatOpen(true)}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all border ${isChatOpen
+                    ? 'bg-cyan-500 text-white border-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.4)]'
+                    : 'bg-slate-900/80 hover:bg-slate-800 text-slate-200 border-white/10'
+                    }`}
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span className="text-sm font-medium">AI Chat</span>
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg transition-all border border-slate-700 hover:border-slate-500"
+                >
+                  <Plus className="w-4 h-4 rotate-45" />
+                  <span className="text-sm font-medium">New Graph</span>
+                </button>
+              </>
             )}
           </div>
         </div>
@@ -319,13 +338,12 @@ const App: React.FC = () => {
 
       {toast && (
         <div
-          className={`fixed top-6 left-1/2 -translate-x-1/2 z-40 px-4 py-2 rounded-lg text-sm font-medium shadow-xl ${
-            toast.type === 'error'
-              ? 'bg-red-500/90 text-white'
-              : toast.type === 'success'
+          className={`fixed top-6 left-1/2 -translate-x-1/2 z-40 px-4 py-2 rounded-lg text-sm font-medium shadow-xl ${toast.type === 'error'
+            ? 'bg-red-500/90 text-white'
+            : toast.type === 'success'
               ? 'bg-emerald-500/90 text-white'
               : 'bg-slate-700/90 text-slate-100'
-          }`}
+            }`}
         >
           {toast.message}
         </div>
@@ -333,63 +351,63 @@ const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="w-full h-full relative flex items-center justify-center">
-        
+
         {/* State: IDLE / PARSING */}
         {(appState === AppState.IDLE || appState === AppState.PARSING) && (
           <div className="z-20 w-full px-4 animate-in fade-in zoom-in duration-500">
             <div className="text-center mb-10">
-               <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
-                 Visualize Your Knowledge
-               </h2>
-               <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-                 Transform flat markdown files into deep, interactive 3D constellations of entities and relationships using advanced AI.
-               </p>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
+                Visualize Your Knowledge
+              </h2>
+              <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+                Transform flat markdown files into deep, interactive 3D constellations of entities and relationships using advanced AI.
+              </p>
             </div>
-            <UploadZone 
-              onFileLoaded={handleFileLoad} 
-              isLoading={appState === AppState.PARSING} 
+            <UploadZone
+              onFileLoaded={handleFileLoad}
+              isLoading={appState === AppState.PARSING}
             />
           </div>
         )}
 
         {/* State: ERROR */}
         {appState === AppState.ERROR && (
-           <div className="z-20 text-center p-8 bg-red-950/20 border border-red-500/30 rounded-2xl backdrop-blur-sm animate-in fade-in zoom-in">
-              <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                 <Activity className="w-8 h-8 text-red-500" />
-              </div>
-              <h3 className="text-2xl font-bold text-red-400 mb-2">Extraction Failed</h3>
-              <p className="text-red-200/60 max-w-md mx-auto">
-                We encountered an issue processing your file. Please check if the file is valid markdown and try again.
-              </p>
-           </div>
+          <div className="z-20 text-center p-8 bg-red-950/20 border border-red-500/30 rounded-2xl backdrop-blur-sm animate-in fade-in zoom-in">
+            <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Activity className="w-8 h-8 text-red-500" />
+            </div>
+            <h3 className="text-2xl font-bold text-red-400 mb-2">Extraction Failed</h3>
+            <p className="text-red-200/60 max-w-md mx-auto">
+              We encountered an issue processing your file. Please check if the file is valid markdown and try again.
+            </p>
+          </div>
         )}
 
         {/* State: VISUALIZING */}
         {appState === AppState.VISUALIZING && (
           <div className="absolute inset-0 animate-in fade-in duration-1000">
-            <Graph3D 
-              data={graphData} 
-              onNodeClick={setSelectedNode} 
+            <Graph3D
+              data={graphData}
+              onNodeClick={setSelectedNode}
               highlightedNodeIds={highlightedNodeIds}
               highlightedLinkKeys={highlightedLinkKeys}
               selectedNodeId={selectedNode?.id ?? null}
             />
-            
+
             {/* Overlay Info Tip */}
             {!selectedNode && (
-                <div className="absolute bottom-10 right-10 max-w-xs bg-slate-900/50 backdrop-blur-md p-4 rounded-xl border border-white/5 text-sm text-slate-400 pointer-events-none hidden md:block">
-                    <div className="flex items-center space-x-2 mb-2 text-cyan-400">
-                        <Info className="w-4 h-4" />
-                        <span className="font-bold uppercase text-xs">Navigation</span>
-                    </div>
-                    <ul className="space-y-1 text-xs">
-                        <li>• Left Click + Drag to Rotate</li>
-                        <li>• Right Click + Drag to Pan</li>
-                        <li>• Scroll to Zoom</li>
-                        <li>• Click Node for Details</li>
-                    </ul>
+              <div className="absolute bottom-10 right-10 max-w-xs bg-slate-900/50 backdrop-blur-md p-4 rounded-xl border border-white/5 text-sm text-slate-400 pointer-events-none hidden md:block">
+                <div className="flex items-center space-x-2 mb-2 text-cyan-400">
+                  <Info className="w-4 h-4" />
+                  <span className="font-bold uppercase text-xs">Navigation</span>
                 </div>
+                <ul className="space-y-1 text-xs">
+                  <li>• Left Click + Drag to Rotate</li>
+                  <li>• Right Click + Drag to Pan</li>
+                  <li>• Scroll to Zoom</li>
+                  <li>• Click Node for Details</li>
+                </ul>
+              </div>
             )}
 
             <div className="absolute bottom-4 left-0 right-0 px-4 md:px-16 z-30">
@@ -466,11 +484,21 @@ const App: React.FC = () => {
         )}
 
         {/* Sidebar for Node Details */}
-        <Sidebar 
-          node={selectedNode} 
-          onClose={() => setSelectedNode(null)} 
+        <Sidebar
+          node={selectedNode}
+          onClose={() => setSelectedNode(null)}
         />
-        
+
+        {/* AI Chat Interface */}
+        {isChatOpen && appState === AppState.VISUALIZING && (
+          <AnalysisChat
+            graphData={graphData}
+            messages={chatMessages}
+            onMessagesChange={setChatMessages}
+            onClose={() => setIsChatOpen(false)}
+          />
+        )}
+
       </main>
     </div>
   );

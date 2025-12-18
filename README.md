@@ -21,6 +21,7 @@ KnowledgeNexus ingests Markdown or plain-text notes, asks Google’s **Gemini 3 
 - **Contextual insights** – `components/Sidebar.tsx` reveals descriptions, node IDs, and importance bars for selected nodes, while `App.tsx` tracks stats, file names, and state transitions (`IDLE → PARSING → VISUALIZING`).
 - **Search & highlighting** – a bottom command palette filters both nodes and relationships (min two characters) and highlights matching links via `buildLinkKey`.
 - **JSON import/export** – load prior graphs through the hidden JSON picker or export normalized snapshots via `createGraphExportSnapshot`, complete with timestamped filenames.
+- **AI Graph Reasoning Chat** – A persistent, draggable chat window (`components/AnalysisChat.tsx`) that lets you converse with Gemini 3 Flash about the graph's structure, themes, and hidden patterns.
 - **Operational feedback** – glassmorphic toasts, node/link counters, and duration measurements tell you when Gemini succeeds, when a graph is invalid, or when to retry.
 
 ## UI Tour
@@ -29,6 +30,7 @@ KnowledgeNexus ingests Markdown or plain-text notes, asks Google’s **Gemini 3 
 - **Upload Zone** – cinematic drop area for Markdown/TXT with drag indicators, inline validation, and loading spinner.
 - **Visualization surface** – 3D canvas with detailed ambient styling, nav hints, and a dynamic legend of entity types.
 - **Query palette** – persistent search form that lists matching nodes or relationship triplets and focuses the camera when a result is picked.
+- **AI Chat** – floating, resizable window for natural language Q&A with the graph model.
 - **Insights sidebar** – slides in when a node is selected, displaying description, ID, category, and importance meter.
 
 ## Architecture
@@ -43,6 +45,8 @@ KnowledgeNexus ingests Markdown or plain-text notes, asks Google’s **Gemini 3 
 
 - React 19 + Vite + TypeScript 5.8 (strict JSX + hooks)
 - Google GenAI SDK (`@google/genai`) targeting `gemini-3-flash-preview`
+- Google GenAI SDK (`@google/genai`) targeting `gemini-3-flash-preview`
+- `react-markdown` for rich text chat responses
 - `react-force-graph-3d`, `three`, and `three-spritetext` for rendering
 - Tailwind CSS via CDN plus Lucide React icons for UI polish
 - Local utilities (`utils/graph.ts`, `types.ts`) that share types across components and services
@@ -88,7 +92,8 @@ API_KEY=your_google_gemini_api_key
 3. Watch `AppState` change from **IDLE** to **PARSING** as the Gemini request runs. Errors raise a red toast and temporarily show the error card.
 4. Once **VISUALIZING**, rotate (left drag), pan (right drag), and zoom (scroll). Click nodes to focus them, open the sidebar, and expose their metadata.
 5. Use the bottom search palette to highlight nodes or relationships. Press “Clear” to reset and regain organic graph motion.
-6. Use **Load JSON** to rehydrate a saved graph, **Save JSON** to export the normalized structure, or **New Graph** to wipe the scene and upload another file.
+6. Click **AI Chat** to open the reasoning assistant. Drag the header to move it, resize from the bottom-right, and ask questions about your data. The history persists while the session is open.
+7. Use **Load JSON** to rehydrate a saved graph, **Save JSON** to export the normalized structure, or **New Graph** to wipe the scene and upload another file.
 
 ## Graph JSON format
 
@@ -131,6 +136,7 @@ When importing JSON, `isGraphDataShape` validates that every node has `id`, `nam
 ├── components/
 │   ├── Graph3D.tsx        # 3D renderer, highlighting, camera focus
 │   ├── Sidebar.tsx        # Node insights panel
+│   ├── AnalysisChat.tsx   # Floating AI reasoning interface
 │   └── UploadZone.tsx     # Drag-and-drop ingestion surface
 ├── services/geminiService.ts # Gemini extraction helper
 ├── utils/graph.ts         # Normalization, serialization, helper guards
