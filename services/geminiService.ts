@@ -4,20 +4,25 @@ import { GraphData } from "../types";
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const extractGraphFromMarkdown = async (markdownText: string): Promise<GraphData> => {
-  const modelId = "gemini-2.5-flash"; // Fast and efficient for extraction
+  const modelId = "gemini-3-flash-preview"; // Using the search-identified ID
 
   const systemInstruction = `
-    You are an expert Knowledge Graph Architect. 
-    Your task is to analyze the provided text (Markdown format) and extract a knowledge graph consisting of distinct entities (nodes) and their relationships (edges).
+    You are a visionary Knowledge Graph Architect and Expert Data Scientist.
+    Your task is to conduct a deep, sophisticated analysis of the provided text (Markdown format) to construct a brilliant and comprehensive knowledge graph.
     
-    Rules:
-    1. Identify key entities: People, Organizations, Locations, Concepts, Technologies, Events, etc.
-    2. Consolidate synonyms (e.g., "Google", "Google Inc.", "The search giant" should be the same node ID).
-    3. Create meaningful relationships between entities.
-    4. Provide a brief, concise description for each entity based on the text.
-    5. Categorize each entity into a broad 'type' (e.g., Person, Organization, Concept).
-    6. Ensure the output is strictly valid JSON conforming to the schema.
-    7. Limit the extraction to the most important 30-50 nodes to keep the visualization clean, unless the text is very dense with critical info.
+    The goal is NOT just to extract surface-level nouns, but to map the *intellectual structure* of the specific domain.
+    
+    Rules for Execution:
+    1. **Deep Extraction**: Identify ALL relevant entities including People, Organizations, Locations, but also abstract Concepts, Philosophies, Technologies, Events, and mental models.
+    2. **Latent Relationships**: Look for indirect links, thematic connections, and causal chains. If A influences B which implies C, capture those nuances.
+    3. **No Artificial Limits**: Do NOT limit the graph to a small number of nodes. The graph should be as large and detailed as necessary to fully represent the richness of the text. Biased towards high granularity and completeness.
+    4. **Smart Consolidation**: Intelligently merge synonyms and pronouns (e.g., "The Giant" referring to "Google" contextually) but preserve distinct nuances where appropriate.
+    5. **Categorical Precision**: Use precise node types. Instead of just 'Concept', use 'Algorithm', 'Paradigm', 'Metric', etc. where possible.
+    6. **Strict JSON**: The output must be strictly valid JSON conforming to the schema.
+    7. **QUANTITY TARGET**: Aim for 50-100+ nodes for any text of reasonable length. Do NOT summarize or simplify. Be EXHAUSTIVE.
+    
+    Reasoning Level: HIGH.
+    Biases: Completeness, Connectivity, Insight.
   `;
 
   try {
@@ -25,6 +30,8 @@ export const extractGraphFromMarkdown = async (markdownText: string): Promise<Gr
       model: modelId,
       contents: `Here is the markdown content to analyze:\n\n${markdownText}`,
       config: {
+        thinkingConfig: { includeThoughts: true, thinkingLevel: "HIGH" as any },
+        maxOutputTokens: 65536,
         systemInstruction: systemInstruction,
         responseMimeType: "application/json",
         responseSchema: {
@@ -69,7 +76,7 @@ export const extractGraphFromMarkdown = async (markdownText: string): Promise<Gr
     }
 
     const rawData = JSON.parse(response.text);
-    
+
     // Map to our internal types and ensure numeric values for visualization
     const nodes = rawData.nodes.map((n: any) => ({
       ...n,

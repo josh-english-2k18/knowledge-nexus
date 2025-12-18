@@ -2,7 +2,7 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![React](https://img.shields.io/badge/react-19.2-61dafb.svg)
-![Gemini](https://img.shields.io/badge/AI-Gemini_2.5_Flash-8e75b2.svg)
+![Gemini](https://img.shields.io/badge/AI-Gemini_3_Flash_Preview-8e75b2.svg)
 ![TypeScript](https://img.shields.io/badge/typescript-5.8-3178c6.svg)
 
 > **Uncover the hidden structure of Markdown documents with AI-powered, 3D knowledge graphs.**
@@ -11,11 +11,11 @@
 
 ## Overview
 
-KnowledgeNexus ingests Markdown or plain-text notes, asks Google’s **Gemini 2.5 Flash** model to extract entities and relationships, and renders the results as an immersive force-directed graph. The experience is built with React 19, Vite, and TypeScript, combines Tailwind-driven UI polish with Lucide icons, and relies on a lightweight utility layer to normalize graph data for reliable import/export flows.
+KnowledgeNexus ingests Markdown or plain-text notes, asks Google’s **Gemini 3 Flash Preview** model (with Thinking Mode enabled) to extract entities and relationships, and renders the results as an immersive force-directed graph. The experience is built with React 19, Vite, and TypeScript, combines Tailwind-driven UI polish with Lucide icons, and relies on a lightweight utility layer to normalize graph data for reliable import/export flows.
 
 ## Feature Highlights
 
-- **Gemini-powered extraction** – `services/geminiService.ts` enforces a JSON schema so Gemini always returns valid `nodes`/`links` payloads with descriptions, types, and importance scores mapped to `val`.
+- **Gemini-powered extraction** – `services/geminiService.ts` leverages **Gemini 3's "High" Thinking Mode** to perform deep, sophisticated analysis. It targets 50-100+ nodes per extract and maps the intellectual structure of the domain, not just surface entities.
 - **Zero-friction ingestion** – `components/UploadZone.tsx` accepts `.md`, `.markdown`, and `.txt`, validates file types, and streams content to the extractor while animating feedback.
 - **Immersive 3D graph** – `components/Graph3D.tsx` wraps `react-force-graph-3d`, autogenerates a color legend per entity type, keeps sprite labels facing the camera, and zooms any clicked node into focus.
 - **Contextual insights** – `components/Sidebar.tsx` reveals descriptions, node IDs, and importance bars for selected nodes, while `App.tsx` tracks stats, file names, and state transitions (`IDLE → PARSING → VISUALIZING`).
@@ -34,7 +34,7 @@ KnowledgeNexus ingests Markdown or plain-text notes, asks Google’s **Gemini 2.
 ## Architecture
 
 1. **Ingestion (`UploadZone`)** – validates the file type, reads text via `FileReader`, and passes it plus the filename to `App.tsx`.
-2. **Extraction (`extractGraphFromMarkdown`)** – sends the text to Gemini with system instructions describing a “Knowledge Graph Architect” persona and a strict `responseSchema`.
+2. **Extraction (`extractGraphFromMarkdown`)** – sends the text to Gemini with system instructions describing a "Visionary Knowledge Graph Architect" persona, unlimited node count goals, "Reasoning: HIGH" configuration, and a strict `responseSchema`.
 3. **Normalization (`utils/graph.ts`)** – converts Gemini’s `importance` to `val`, strips invalid links, and keeps helper utilities (`buildLinkKey`, `createGraphExportSnapshot`, `isGraphDataShape`) centralized.
 4. **Visualization (`Graph3D`)** – computes `typeColorMap`, tunes d3 forces, builds `SpriteText` labels, and keeps highlight state in sync with search results.
 5. **Stateful UI (`App.tsx`)** – orchestrates `AppState`, toast notifications, stats, query filtering, node selection, and reset flows, then hands node metadata to `Sidebar`.
@@ -42,7 +42,7 @@ KnowledgeNexus ingests Markdown or plain-text notes, asks Google’s **Gemini 2.
 ## Tech Stack
 
 - React 19 + Vite + TypeScript 5.8 (strict JSX + hooks)
-- Google GenAI SDK (`@google/genai`) targeting `gemini-2.5-flash`
+- Google GenAI SDK (`@google/genai`) targeting `gemini-3-flash-preview`
 - `react-force-graph-3d`, `three`, and `three-spritetext` for rendering
 - Tailwind CSS via CDN plus Lucide React icons for UI polish
 - Local utilities (`utils/graph.ts`, `types.ts`) that share types across components and services
